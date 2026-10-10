@@ -65,6 +65,8 @@ def main():
             record.update(client.chat(model, [{"role": "user", "content": item["prompt"]}],
                                       max_tokens=gen["max_tokens"], temperature=gen["temperature"],
                                       top_p=gen["top_p"], seed=seed, extra_body=extra))
+            if "x-litellm-cache-key" in record.get("headers", {}):
+                record["error"] = "gateway cache hit; response may belong to another condition"
         except Exception as e:
             record["error"] = str(e)
         with lock, out_path.open("a", encoding="utf-8") as f:

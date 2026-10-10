@@ -7,11 +7,17 @@
   "models": {
     "8b": {
       "off": "swiss-ai/apertus-v1.5-8b",
-      "on": "swiss-ai/apertus-v1.5-8b-thinking"
+      "on": {
+        "model": "swiss-ai/apertus-v1.5-8b",
+        "extra_body": {"chat_template_kwargs": {"enable_thinking": true}}
+      }
     },
     "70b": {
       "off": "swiss-ai/apertus-v1.5-70b",
-      "on": "swiss-ai/apertus-v1.5-70b-thinking"
+      "on": {
+        "model": "swiss-ai/apertus-v1.5-70b",
+        "extra_body": {"chat_template_kwargs": {"enable_thinking": true}}
+      }
     }
   },
   "generation": {

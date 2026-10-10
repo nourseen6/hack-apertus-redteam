@@ -128,7 +128,9 @@ def main():
                               max_tokens=jcfg["max_tokens"], temperature=jcfg["temperature"])
             rec["judge_text"] = out["answer"]
             rec["result"] = parser(out["answer"])
-            if rec["result"] is None:
+            if "x-litellm-cache-key" in out.get("headers", {}):
+                rec["result"], rec["error"] = None, "gateway cache hit"
+            elif rec["result"] is None:
                 rec["error"] = "unparseable judge output"
         except Exception as e:
             rec["error"] = str(e)

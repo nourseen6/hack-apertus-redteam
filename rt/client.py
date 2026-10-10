@@ -41,15 +41,69 @@ class ChatClient:
         )
         try:
             with urllib.request.urlopen(req, timeout=self.timeout) as resp:
-                return json.loads(resp.read().decode("utf-8"))
+                body = json.loads(resp.read().decode("utf-8"))
+                body["_headers"] = {k.lower(): v for k, v in resp.headers.items()
+                                    if k.lower().startswith("x-litellm") or "cache" in k.lower()}
+                return body
         except urllib.error.HTTPError as e:
             raise ApiError(e.code, e.read().decode("utf-8", "replace")) from None
 
     def models(self):
         return self._request("GET", "/models").get("data", [])
 
+    def _stream(self, payload):
+        """POST with stream=True and rebuild a non-streaming response body.
+
+        Streaming keeps long thinking generations from hitting the gateway timeout.
+        """
+        payload = {**payload, "stream": True, "stream_options": {"include_usage": True}}
+        req = urllib.request.Request(
+            self.base_url + "/chat/completions",
+            data=json.dumps(payload).encode("utf-8"),
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+                "Accept": "text/event-stream",
+                "User-Agent": self.user_agent,
+            },
+        )
+        content, reasoning = [], []
+        finish_reason = usage = model = resp_id = None
+        try:
+            with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                headers = {k.lower(): v for k, v in resp.headers.items()
+                           if k.lower().startswith("x-litellm") or "cache" in k.lower()}
+                for raw in resp:
+                    line = raw.decode("utf-8", "replace").strip()
+                    if not line.startswith("data:"):
+                        continue
+                    chunk = line[5:].strip()
+                    if chunk == "[DONE]":
+                        break
+                    event = json.loads(chunk)
+                    model = event.get("model") or model
+                    resp_id = event.get("id") or resp_id
+                    usage = event.get("usage") or usage
+                    for choice in event.get("choices") or []:
+                        delta = choice.get("delta") or {}
+                        if delta.get("content"):
+                            content.append(delta["content"])
+                        r = delta.get("reasoning_content") or delta.get("reasoning")
+                        if r:
+                            reasoning.append(r)
+                        finish_reason = choice.get("finish_reason") or finish_reason
+        except urllib.error.HTTPError as e:
+            raise ApiError(e.code, e.read().decode("utf-8", "replace")) from None
+
+        message = {"content": "".join(content)}
+        if reasoning:
+            message["reasoning_content"] = "".join(reasoning)
+        return {"id": resp_id, "model": model, "usage": usage, "_headers": headers,
+                "choices": [{"message": message, "finish_reason": finish_reason}]}
+
     def chat(self, model, messages, max_tokens, temperature=0.0, top_p=1.0, seed=None,
-             extra_body=None, retries=6):
+             extra_body=None, retries=6, bypass_cache=True, stream=True):
         payload = {
             "model": model,
             "messages": messages,
@@ -57,6 +111,8 @@ class ChatClient:
             "temperature": temperature,
             "top_p": top_p,
         }
+        if bypass_cache:
+            payload["cache"] = {"no-cache": True, "no-store": True}
         if seed is not None:
             payload["seed"] = seed
         if extra_body:
@@ -65,7 +121,7 @@ class ChatClient:
         for attempt in range(retries + 1):
             start = time.monotonic()
             try:
-                data = self._request("POST", "/chat/completions", payload)
+                data = self._stream(payload) if stream else self._request("POST", "/chat/completions", payload)
                 break
             except ApiError as e:
                 if e.status not in RETRYABLE or attempt == retries:
@@ -85,6 +141,8 @@ class ChatClient:
             "usage": data.get("usage"),
             "latency_s": round(time.monotonic() - start, 2),
             "served_model": data.get("model"),
+            "response_id": data.get("id"),
+            "headers": data.get("_headers", {}),
         }
 
 
