@@ -102,6 +102,28 @@ class ChatClient:
         return {"id": resp_id, "model": model, "usage": usage, "_headers": headers,
                 "choices": [{"message": message, "finish_reason": finish_reason}]}
 
+    def _with_retries(self, call, retries):
+        for attempt in range(retries + 1):
+            try:
+                return call()
+            except ApiError as e:
+                if e.status not in RETRYABLE or attempt == retries:
+                    raise
+            except (urllib.error.URLError, TimeoutError, ConnectionError):
+                if attempt == retries:
+                    raise
+            time.sleep(min(60, 2 ** attempt) + random.random())
+
+    def echo(self, model, text, retries=8):
+        """Per-token logprobs of `text` itself (prompt scoring via /completions echo)."""
+        payload = {"model": model, "prompt": text, "max_tokens": 1, "temperature": 0,
+                   "echo": True, "logprobs": 0, "cache": {"no-cache": True, "no-store": True}}
+        data = self._with_retries(lambda: self._request("POST", "/completions", payload), retries)
+        lp = data["choices"][0]["logprobs"]
+        return {"tokens": lp["tokens"], "offsets": lp["text_offset"],
+                "logprobs": lp["token_logprobs"], "served_model": data.get("model"),
+                "headers": data.get("_headers", {})}
+
     def chat(self, model, messages, max_tokens, temperature=0.0, top_p=1.0, seed=None,
              extra_body=None, retries=6, bypass_cache=True, stream=True):
         payload = {
@@ -118,18 +140,10 @@ class ChatClient:
         if extra_body:
             payload.update(extra_body)
 
-        for attempt in range(retries + 1):
-            start = time.monotonic()
-            try:
-                data = self._stream(payload) if stream else self._request("POST", "/chat/completions", payload)
-                break
-            except ApiError as e:
-                if e.status not in RETRYABLE or attempt == retries:
-                    raise
-            except (urllib.error.URLError, TimeoutError, ConnectionError):
-                if attempt == retries:
-                    raise
-            time.sleep(min(60, 2 ** attempt) + random.random())
+        start = time.monotonic()
+        data = self._with_retries(
+            lambda: self._stream(payload) if stream else self._request("POST", "/chat/completions", payload),
+            retries)
 
         choice = data["choices"][0]
         reasoning, answer, parse = split_reasoning(choice.get("message") or {})

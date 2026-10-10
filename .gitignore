@@ -15,6 +15,8 @@ venv/
 *.gguf
 results/raw/
 data/cache/
+data/images/
+data/audio/
 hf_cache/
 
 # OS / editor

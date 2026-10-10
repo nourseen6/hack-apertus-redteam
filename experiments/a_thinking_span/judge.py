@@ -100,7 +100,7 @@ def main():
 
     latest = {}
     for r in read_jsonl(raw_path):
-        if not r.get("error"):
+        if not r.get("error") and r["kind"] in ("harmful", "benign"):
             latest[r["key"]] = r
 
     jobs = []
