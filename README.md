@@ -13,7 +13,7 @@ The goal is not a jailbreak collection, a chatbot, or a generic safety tool. The
 | Day | Date | Plan | Status |
 |---|---|---|---|
 | 1 | 8 Oct | Target research, hypotheses, first experiments | Research done |
-| 2 | 9 Oct | Kill weak hypotheses, pick the strongest real finding | In progress |
+| 2 | 9–10 Oct | Kill weak hypotheses, pick the strongest real finding | Experiment A harness built; pilot waiting on API key |
 | 3–5 | 10–12 Oct | Deep validation, variants, reproducibility | — |
 | 6 | 13 Oct | Automated harness, related findings from the same family | — |
 | 7 | 14 Oct | Clean end-to-end reproduction | — |
@@ -81,13 +81,16 @@ Generic persona or template jailbreaks, verbatim recall of the canonical texts a
 - Before calling anything new, check [`swiss-ai/Apertus-Generation-Issues-Reports`](https://github.com/swiss-ai/Apertus-Generation-Issues-Reports) and the official Getting Started Guide.
 - Do not collect or publish personal data about real people. Harmful-content experiments report rates and redacted excerpts only.
 
-## Planned layout
+## Layout
 
 ```
-experiments/   one folder per experiment: item sets, configs, run scripts
-results/       raw outputs and scored results (large files kept out of git)
-report/        final write-up and figures
+rt/                          shared client (OpenAI-compatible, no dependencies) and dataset loaders
+experiments/a_thinking_span/ Experiment A: run, judge, analyze — see its README for the protocol
+results/                     summaries (rates only); raw outputs in results/raw/ are git-ignored
+report/                      final write-up and figures
 ```
+
+Requires Python 3.10+ and nothing else.
 
 ## Sources
 
