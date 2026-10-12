@@ -1,0 +1,52 @@
+{
+  "rule": "Fixed before any model call. Motivated by constitutional items y3 and y4, where bare 100000 and 50000 were rejected in some languages. This tests notation, not those items again under the old rule. There are 20 yes-equalities: 4 apostrophe families times 4 languages, plus one ordinary locale grouping per language. The decoy 100'000 versus 200000 must be no in at least 3 of 4 languages or the run is invalid. A yes-equality miss is a gold-yes pair answered no. Promote only if at least 5 of 20 miss and the misses cover at least 2 families. Stop if 1 or fewer miss. Civic threshold questions are an impact check, not a second promotion rule: record a flip when plain and apostrophe disagree inside one language. Hand-check every miss.",
+  "ask": {
+    "en": "Reply with only yes or no.",
+    "de": "Antworte nur mit ja oder nein.",
+    "fr": "Réponds uniquement par oui ou non.",
+    "it": "Rispondi solo con sì o no."
+  },
+  "same": {
+    "en": "Are {a} and {b} the same number?",
+    "de": "Sind {a} und {b} dieselbe Zahl?",
+    "fr": "Est-ce que {a} et {b} sont le même nombre ?",
+    "it": "{a} e {b} sono lo stesso numero?"
+  },
+  "decoy": {"a": "100'000", "b": "200000", "gold": "no"},
+  "families": [
+    {"id": "ascii100", "a": "100'000", "b": "100000"},
+    {"id": "curly100", "a": "100\u2019000", "b": "100000"},
+    {"id": "ascii50", "a": "50'000", "b": "50000"},
+    {"id": "curly50", "a": "50\u2019000", "b": "50000"}
+  ],
+  "locale": {
+    "en": {"id": "locale100", "a": "100,000", "b": "100000"},
+    "de": {"id": "locale100", "a": "100.000", "b": "100000"},
+    "fr": {"id": "locale100", "a": "100 000", "b": "100000"},
+    "it": {"id": "locale100", "a": "100.000", "b": "100000"}
+  },
+  "civic": [
+    {"id": "init", "gold": "yes", "plain": {
+      "en": "Can 100000 eligible voters propose a partial revision of the Federal Constitution?",
+      "de": "Können 100000 Stimmberechtigte eine Teilrevision der Bundesverfassung vorschlagen?",
+      "fr": "100000 citoyens ayant le droit de vote peuvent-ils proposer une révision partielle de la Constitution fédérale ?",
+      "it": "100000 aventi diritto di voto possono proporre una revisione parziale della Costituzione federale?"
+    }, "apos": {
+      "en": "Can 100'000 eligible voters propose a partial revision of the Federal Constitution?",
+      "de": "Können 100'000 Stimmberechtigte eine Teilrevision der Bundesverfassung vorschlagen?",
+      "fr": "100'000 citoyens ayant le droit de vote peuvent-ils proposer une révision partielle de la Constitution fédérale ?",
+      "it": "100'000 aventi diritto di voto possono proporre una revisione parziale della Costituzione federale?"
+    }},
+    {"id": "ref", "gold": "yes", "plain": {
+      "en": "Can 50000 eligible voters demand a referendum on a federal act?",
+      "de": "Können 50000 Stimmberechtigte eine Volksabstimmung über ein Bundesgesetz verlangen?",
+      "fr": "50000 citoyens ayant le droit de vote peuvent-ils demander un référendum sur une loi fédérale ?",
+      "it": "50000 aventi diritto di voto possono chiedere un referendum su una legge federale?"
+    }, "apos": {
+      "en": "Can 50'000 eligible voters demand a referendum on a federal act?",
+      "de": "Können 50'000 Stimmberechtigte eine Volksabstimmung über ein Bundesgesetz verlangen?",
+      "fr": "50'000 citoyens ayant le droit de vote peuvent-ils demander un référendum sur une loi fédérale ?",
+      "it": "50'000 aventi diritto di voto possono chiedere un referendum su una legge federale?"
+    }}
+  ]
+}
