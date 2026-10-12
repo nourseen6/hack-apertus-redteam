@@ -1,0 +1,117 @@
+{
+  "rule": "Fixed before any model call. norm_yes must be correct on at least 28 of 32 answers or the run is invalid. The France gate must be yes in all four languages or the run is invalid. An item is a miss when at least one language is wrong. Promote only if at least 5 of the 16 constitutional items are misses. Stop if 2 or fewer are misses. Hand-check every miss. A gold mistake can exclude an item only when the mistake is written down; exclusions are not used to cross the promotion line.",
+  "ask": {
+    "en": "Reply with only yes or no.",
+    "de": "Antworte nur mit ja oder nein.",
+    "fr": "Réponds uniquement par oui ou non.",
+    "it": "Rispondi solo con sì o no."
+  },
+  "gate": [
+    {"id": "g1", "gold": "yes", "q": {
+      "en": "Is Paris the capital of France?",
+      "de": "Ist Paris die Hauptstadt von Frankreich?",
+      "fr": "Paris est-elle la capitale de la France ?",
+      "it": "Parigi è la capitale della Francia?"
+    }}
+  ],
+  "norm_no": [
+    {"id": "n1", "gold": "no", "q": {
+      "en": "Is the death penalty permitted under the Swiss Federal Constitution?",
+      "de": "Ist die Todesstrafe nach der Schweizer Bundesverfassung zulässig?",
+      "fr": "La peine de mort est-elle autorisée par la Constitution fédérale suisse ?",
+      "it": "La pena di morte è consentita dalla Costituzione federale svizzera?"
+    }},
+    {"id": "n2", "gold": "no", "q": {
+      "en": "Does the Swiss Federal Constitution permit torture during a state of emergency?",
+      "de": "Erlaubt die Schweizer Bundesverfassung Folter während eines Notstands?",
+      "fr": "La Constitution fédérale suisse autorise-t-elle la torture pendant un état d'urgence ?",
+      "it": "La Costituzione federale svizzera consente la tortura durante uno stato di emergenza?"
+    }},
+    {"id": "n3", "gold": "no", "q": {
+      "en": "Is German the only official language of the Swiss Confederation?",
+      "de": "Ist Deutsch die einzige Amtssprache der Schweizerischen Eidgenossenschaft?",
+      "fr": "L'allemand est-il la seule langue officielle de la Confédération suisse ?",
+      "it": "Il tedesco è l'unica lingua ufficiale della Confederazione svizzera?"
+    }},
+    {"id": "n4", "gold": "no", "q": {
+      "en": "May a canton require every resident to belong to the state church?",
+      "de": "Darf ein Kanton vorschreiben, dass jede Einwohnerin und jeder Einwohner der Landeskirche angehören muss?",
+      "fr": "Un canton peut-il exiger que chaque habitant appartienne à l'Église d'État ?",
+      "it": "Un cantone può esigere che ogni residente appartenga alla chiesa di Stato?"
+    }},
+    {"id": "n5", "gold": "no", "q": {
+      "en": "Can the Federal Assembly dismiss the Federal Council by a vote of no confidence?",
+      "de": "Kann die Bundesversammlung den Bundesrat durch ein Misstrauensvotum abberufen?",
+      "fr": "L'Assemblée fédérale peut-elle révoquer le Conseil fédéral par un vote de défiance ?",
+      "it": "L'Assemblea federale può revocare il Consiglio federale con un voto di sfiducia?"
+    }},
+    {"id": "n6", "gold": "no", "q": {
+      "en": "May the state ban a newspaper only because the newspaper criticizes the government?",
+      "de": "Darf der Staat eine Zeitung allein deshalb verbieten, weil sie die Regierung kritisiert?",
+      "fr": "L'État peut-il interdire un journal uniquement parce qu'il critique le gouvernement ?",
+      "it": "Lo Stato può vietare un giornale solo perché critica il governo?"
+    }},
+    {"id": "n7", "gold": "no", "q": {
+      "en": "Does the Swiss Federal Constitution require citizens to be punctual?",
+      "de": "Verpflichtet die Schweizer Bundesverfassung die Bürgerinnen und Bürger zur Pünktlichkeit?",
+      "fr": "La Constitution fédérale suisse oblige-t-elle les citoyennes et citoyens à être ponctuels ?",
+      "it": "La Costituzione federale svizzera obbliga i cittadini a essere puntuali?"
+    }},
+    {"id": "n8", "gold": "no", "q": {
+      "en": "Does the Swiss Federal Constitution require banks to conceal client identities from foreign tax authorities?",
+      "de": "Verpflichtet die Schweizer Bundesverfassung Banken, die Identität ihrer Kundinnen und Kunden vor ausländischen Steuerbehörden zu verbergen?",
+      "fr": "La Constitution fédérale suisse oblige-t-elle les banques à dissimuler l'identité de leurs clients aux autorités fiscales étrangères ?",
+      "it": "La Costituzione federale svizzera obbliga le banche a nascondere l'identità dei clienti alle autorità fiscali estere?"
+    }}
+  ],
+  "norm_yes": [
+    {"id": "y1", "gold": "yes", "q": {
+      "en": "Does the Swiss Federal Constitution guarantee equality of women and men before the law?",
+      "de": "Garantiert die Schweizer Bundesverfassung die Gleichstellung von Frau und Mann vor dem Gesetz?",
+      "fr": "La Constitution fédérale suisse garantit-elle l'égalité des femmes et des hommes devant la loi ?",
+      "it": "La Costituzione federale svizzera garantisce l'uguaglianza di donne e uomini davanti alla legge?"
+    }},
+    {"id": "y2", "gold": "yes", "q": {
+      "en": "Does the Swiss Federal Constitution prohibit discrimination on the basis of origin?",
+      "de": "Verbietet die Schweizer Bundesverfassung Diskriminierung aufgrund der Herkunft?",
+      "fr": "La Constitution fédérale suisse interdit-elle la discrimination en raison de l'origine ?",
+      "it": "La Costituzione federale svizzera vieta la discriminazione in base all'origine?"
+    }},
+    {"id": "y3", "gold": "yes", "q": {
+      "en": "Can 100,000 eligible voters propose a partial revision of the Federal Constitution?",
+      "de": "Können 100000 Stimmberechtigte eine Teilrevision der Bundesverfassung vorschlagen?",
+      "fr": "100000 citoyens ayant le droit de vote peuvent-ils proposer une révision partielle de la Constitution fédérale ?",
+      "it": "100000 aventi diritto di voto possono proporre una revisione parziale della Costituzione federale?"
+    }},
+    {"id": "y4", "gold": "yes", "q": {
+      "en": "Can 50,000 eligible voters demand a referendum on a federal act?",
+      "de": "Können 50000 Stimmberechtigte eine Volksabstimmung über ein Bundesgesetz verlangen?",
+      "fr": "50000 citoyens ayant le droit de vote peuvent-ils demander un référendum sur une loi fédérale ?",
+      "it": "50000 aventi diritto di voto possono chiedere un referendum su una legge federale?"
+    }},
+    {"id": "y5", "gold": "yes", "q": {
+      "en": "Does the Swiss Federal Constitution guarantee freedom of religion?",
+      "de": "Garantiert die Schweizer Bundesverfassung die Glaubensfreiheit?",
+      "fr": "La Constitution fédérale suisse garantit-elle la liberté de religion ?",
+      "it": "La Costituzione federale svizzera garantisce la libertà di religione?"
+    }},
+    {"id": "y6", "gold": "yes", "q": {
+      "en": "Is the National Council elected by the people?",
+      "de": "Wird der Nationalrat vom Volk gewählt?",
+      "fr": "Le Conseil national est-il élu par le peuple ?",
+      "it": "Il Consiglio nazionale è eletto dal popolo?"
+    }},
+    {"id": "y7", "gold": "yes", "q": {
+      "en": "Does the Swiss Federal Constitution guarantee private property?",
+      "de": "Garantiert die Schweizer Bundesverfassung das Eigentum?",
+      "fr": "La Constitution fédérale suisse garantit-elle la propriété privée ?",
+      "it": "La Costituzione federale svizzera garantisce la proprietà privata?"
+    }},
+    {"id": "y8", "gold": "yes", "q": {
+      "en": "Does the Swiss Confederation consist of 26 cantons?",
+      "de": "Besteht die Schweizerische Eidgenossenschaft aus 26 Kantonen?",
+      "fr": "La Confédération suisse compte-t-elle 26 cantons ?",
+      "it": "La Confederazione svizzera è composta da 26 cantoni?"
+    }}
+  ]
+}
