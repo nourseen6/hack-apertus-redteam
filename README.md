@@ -13,11 +13,11 @@ The goal is not a jailbreak collection, a chatbot, or a generic safety tool. The
 | Day | Date | Plan | Status |
 |---|---|---|---|
 | 1 | 8 Oct | Target research, hypotheses, first experiments | Research done |
-| 2 | 9–10 Oct | Kill weak hypotheses, pick the strongest real finding | Experiment A harness built; pilot waiting on API key |
-| 3–5 | 10–12 Oct | Deep validation, variants, reproducibility | — |
-| 6 | 13 Oct | Automated harness, related findings from the same family | — |
-| 7 | 14 Oct | Clean end-to-end reproduction | — |
-| 8 | 15 Oct | Report, demo, evidence | — |
+| 2 | 9–10 Oct | Kill weak hypotheses, pick the strongest real finding | Thinking and PII canaries killed. Audio carrier is the finding |
+| 3–5 | 10–12 Oct | Deep validation, variants, reproducibility | 8B audio judged by two models and hand-audited. Draft report in `report/REPORT.md` |
+| 6 | 13 Oct | 70B replication, safe spoken prompts | Not started |
+| 7 | 14 Oct | Human-voice check, clean reproduction | — |
+| 8 | 15 Oct | Report, demo, evidence | Draft only |
 | 9 | 16 Oct (until 12:00) | Final audit and submission | — |
 
 ## What Apertus claims
