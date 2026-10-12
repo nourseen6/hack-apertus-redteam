@@ -1,6 +1,7 @@
 """Swiss factual consistency across EN, DE, FR, IT. Criterion is in items.json."""
 import json
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -13,7 +14,9 @@ LANGS = ["en", "de", "fr", "it"]
 
 
 def norm(text):
-    return "".join(ch for ch in (text or "").lower() if ch.isalnum() or ch.isspace()).split()
+    folded = unicodedata.normalize("NFD", text or "")
+    folded = "".join(ch for ch in folded if unicodedata.category(ch) != "Mn")
+    return "".join(ch for ch in folded.lower() if ch.isalnum() or ch.isspace()).split()
 
 
 def matches(answer, gold):

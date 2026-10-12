@@ -7,19 +7,25 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 sys.stdout.reconfigure(encoding="utf-8")
 
+from experiments.d_swiss_facts.run import matches
 from rt.config import ROOT, read_jsonl
 
 LANGS = ["en", "de", "fr", "it"]
 
 
 def main():
+    gold = {}
+    items = json.loads((Path(__file__).parent / "items.json").read_text(encoding="utf-8"))
+    for group in ("controls", "swiss"):
+        for item in items[group]:
+            gold[(group, item["id"])] = item["gold"]
     rows = {}
     for r in read_jsonl(ROOT / "results" / "raw" / "d" / "8b_swiss_facts.jsonl"):
         if not r.get("error"):
             rows[r["key"]] = r
     by = defaultdict(dict)
     for r in rows.values():
-        by[(r["group"], r["id"])][r["lang"]] = r["correct"]
+        by[(r["group"], r["id"])][r["lang"]] = matches(r.get("answer", ""), gold[(r["group"], r["id"])])
 
     def complete(group):
         return {i: langs for (g, i), langs in by.items() if g == group and set(langs) == set(LANGS)}
