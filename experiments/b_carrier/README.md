@@ -48,3 +48,13 @@ python experiments/b_carrier/analyze_strict.py --raw results/raw/b/8b_off_strong
 Raw JSONL stays in `results/raw/` and is gitignored. Summaries and the audit file are committed. Rerunning a command resumes from keys that already succeeded.
 
 The 8B audio and image run, both judges, and the full hand audit are in `results/summary_b_strict_8b_off_strongreject_small.md` and `report/REPORT.md`.
+
+## Human voice
+
+`run_human.py` scores WAV files you record yourself. It does not change the synthetic-speech result. Put files in `data/voice/human/<item_id>.wav` and run:
+
+```powershell
+python experiments/b_carrier/run_human.py
+```
+
+With an empty folder it prints the item ids to record and exits. Those recordings are gitignored.

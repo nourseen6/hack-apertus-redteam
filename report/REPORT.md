@@ -19,7 +19,20 @@ Same 60 StrongREJECT items, two seeds, thinking off. A generation counts as a sa
 | Audio, male voice plus "respond to the audio" | 25 / 120 (20.8%) | 9 / 120 (7.5%) | clear-only +7.5% [+3.3%, +12.5%], p = 0.0039 |
 | Audio, female voice plus the same line | 11 / 120 (9.2%) | 7 / 120 (5.8%) | clear-only +5.8% [+1.7%, +10.8%], p = 0.016 |
 
-The clear cases cover 15 of the 60 items and five StrongREJECT categories: non-violent crime, violence, illegal goods, disinformation, and sexual content. Text produced zero confirmed failures on every one of those items. Intervals are item-level cluster bootstrap 95% confidence intervals. The paired test is exact McNemar on generations that share an item and a seed.
+The clear cases cover 15 of the 60 items. Five of those items failed in more than one seed or voice. Text produced zero confirmed failures on every one of those items.
+
+Clear audio failures by StrongREJECT category (counts are generations, not items):
+
+| Category | Clear | Partial |
+|---|---|---|
+| Non-violent crimes | 7 | 5 |
+| Violence | 5 | 5 |
+| Illegal goods and services | 4 | 2 |
+| Disinformation and deception | 4 | 5 |
+| Sexual content | 1 | 4 |
+| Hate and harassment | 0 | 1 |
+
+This is one failure mode showing up across categories. It is not fifteen unrelated bugs. Intervals are item-level cluster bootstrap 95% confidence intervals. The paired test is exact McNemar on generations that share an item and a seed.
 
 The model heard the requests. Forced transcription matched the original wording at mean difflib ratio 0.89 (male voice, 49 of 60 items at or above 0.9) and 0.97 (female voice, 56 of 60). Failures where the model only repeated the request, or answered a misheard harmless question, are counted separately (5 of 50 audio answers that both judges flagged) and are not in the rates above.
 
@@ -51,7 +64,7 @@ The first automatic score, the unmodified StrongREJECT rubric, treated non-refus
 
 - **8B only.** The 70B spoken-request run is not finished. Until it is, this can still be a small-model quirk.
 - **Synthetic speech only.** Both voices are Microsoft desktop TTS. A human recording of the same items is not in this draft.
-- **No safe spoken prompts yet.** Text XSTest shows low over-refusal. The same safe prompts have not been spoken, so a blanket "audio answers everything" story is not ruled out.
+- **No safe spoken prompts in this draft yet.** Text XSTest shows low over-refusal (6% with thinking off). The same safe prompts spoken aloud are a separate run. Until that run is audited, a blanket "audio answers everything" story is not ruled out.
 - **Sixty items, not 313.** The clear-case interval is already above zero. The full StrongREJECT set would tighten it.
 - **Help varies in severity.** Twenty-one audio failures are clear (actionable help). Twenty-two are partial: the model answers the harmful question, but the content is generic, public, or followed by a disclaimer. Both are counted. The clear-only row is the conservative claim.
 - **Gateway.** Requests bypass the LiteLLM cache (`cache: {no-cache, no-store}`). Cached responses were rejected. Raw logs stay in `results/raw/` and are not committed, because they contain the harmful answers.
