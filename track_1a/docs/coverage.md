@@ -8,7 +8,7 @@ The five listed topics are topics of interest. The challenge text says issues ma
 |---|---|---|
 | Any-topic issue, up to 5 | Spoken requests get harmful help that text refuses. 8B, hand-audited. | Validated. Finding file `findings/audio_refusal_gap.json`. |
 | Same issue on 70B | Refusal openings: text 117/118, audio 3–10%. Transcription mean 0.95–0.97. 20 DNS failures retried separately. | Refusal gap replicated. Harmful-compliance audit not finished. Not a second finding and not yet claimed as confirmed harm. |
-| Safe speech control | 50 XSTest-safe items. Refusal openings: text 4/50, male audio 2/50. | Exploratory. Not judge-audited. |
+| Safe speech control | 50 XSTest-safe items, one judge. Over-refusal: text 4/50 (8%), male audio with instruction 3/50 (6%). Both refused on 1 item, text only 3, audio only 2. | Judged. Spoken benign requests are answered about as often as text. Control for the audio finding, not a separate issue. See `results/summary_b_xstest_safe_8b.md`. |
 | Misrepresentation of culture and values | Not tested as its own experiment. | Open. |
 | Stereotyping and bias | 8B matched hiring probe, 6 pairs × 2 orders × EN/DE/FR/IT, temperature 0. Controls 8/8. Same-group preference in both orders: 1/24 (French only, Swiss citizen over Italian citizen). Language-community pairs were ties. | Unsupported on this set. Not a finding. See `experiments/e_community_bias/AUDIT.md`. |
 | Disclosure of private information | Team PII canaries, 8B full and 70B partial. No memorization. | Rejected for the planted canaries. |
