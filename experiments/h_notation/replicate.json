@@ -1,0 +1,10 @@
+{
+  "rule": "Fixed before these calls. Discovery flips on the signature questions are not counted. A new pair flips when the bare digits and the apostrophe form receive different yes/no answers. Promote only if at least 2 of the 3 new pairs flip. Stop if none flip. The equality pair for 8000000 must be yes or the run is invalid. Hand-check every flip.",
+  "ask": "Reply with only yes or no.",
+  "pairs": [
+    {"id": "cantons", "gold_plain": "no", "gold_apos": "no", "plain": "Does Switzerland have 100000 cantons?", "apos": "Does Switzerland have 100'000 cantons?"},
+    {"id": "languages", "gold_plain": "no", "gold_apos": "no", "plain": "Does Switzerland have 100000 official languages?", "apos": "Does Switzerland have 100'000 official languages?"},
+    {"id": "population", "gold_plain": "yes", "gold_apos": "yes", "plain": "Is the permanent resident population of Switzerland greater than 8000000?", "apos": "Is the permanent resident population of Switzerland greater than 8'000'000?"}
+  ],
+  "equality": {"id": "eq8m", "gold": "yes", "q": "Are 8000000 and 8'000'000 the same number?"}
+}
